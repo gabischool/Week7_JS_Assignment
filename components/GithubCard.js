@@ -63,7 +63,7 @@ function createUserCard(userData) {
 
   const username = document.createElement('p');
   username.classList.add('username');
-  username.textContent = `@${userData.login}`;
+  username.textContent = `${userData.login}`;
   cardInfo.appendChild(username);
 
   const userLocation = document.createElement('p');
@@ -82,11 +82,11 @@ function createUserCard(userData) {
   cardInfo.appendChild(profileLink);
 
   const followers = document.createElement('p');
-  followers.textContent = `Followers: ${userData.followers}`;
+  followers.textContent = `Followers: ${userData?.followers || 'N/A'}`;
   cardInfo.appendChild(followers);
 
   const following = document.createElement('p');
-  following.textContent = `Following: ${userData.following}`;
+  following.textContent = `Following: ${userData?.following || 'N/A'}`;
   cardInfo.appendChild(following);
 
   const bio = document.createElement('p');
@@ -152,7 +152,7 @@ function createFollowersCard(followerData) {
 
   const username = document.createElement('p');
   username.classList.add('username');
-  username.textContent = `@${followerData?.login}`;
+  username.textContent = `${followerData?.login}`;
   cardInfo.appendChild(username);
 
   const userLocation = document.createElement('p');
@@ -171,11 +171,11 @@ function createFollowersCard(followerData) {
   cardInfo.appendChild(profileLink);
 
   // const followers = document.createElement('p');
-  // followers.textContent = `Followers: ${followerData.followers}`;
+  // followers.textContent = `Followers: ${followerData?.login.followers || 'N/A'}`;
   // cardInfo.appendChild(followers);
 
   // const following = document.createElement('p');
-  // following.textContent = `Following: ${userData.following}`;
+  // following.textContent = `Following: ${followerData?.following || 'N/A'}`;
   // cardInfo.appendChild(following);
 
   // const bio = document.createElement('p');
