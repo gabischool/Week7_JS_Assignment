@@ -4,6 +4,98 @@
 // 3️⃣ Look at important fields like `name`, `avatar_url`, `location`, `followers`, `following`, `bio`, and `followers_url`.
 // 4️⃣ Pass the data into a function to create a user card.
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
+function fetchGitData(){
+   axios.get('https://api.github.com/users/nimco-yusuf')
+   .then((response)=>{
+    console.log("sucss",response.data)
+    
+    gitDataCard(response.data)
+
+    return axios.get(response.data.followers_url)
+
+   })
+   .then(response => {
+
+    response.data.forEach(follower => {
+        axios.get(follower.url)  
+        .then(response => {
+            gitDataCard(response.data)
+        })
+        .catch(error => console.log("Error fetching follower:", error))
+    });
+
+})
+
+   .catch(error=> console.log("Error fetching git Data:", error))
+}
+fetchGitData()
+
+
+function gitDataCard(gitData){
+    //selec the main Div
+    
+    const cards = document.querySelector(".cards")
+    
+
+    //create the tags
+    const cardDiv = document.createElement("div")
+    const cardImg = document.createElement("img")
+    const cardInfoDiv = document.createElement("div")
+    const cardH3 = document.createElement("h3")
+    const userNameP = document.createElement("p")
+    const locationP = document.createElement("p")
+
+    const profileP = document.createElement("p")
+
+    const profileUrl = document.createElement('a')
+
+    const followersP = document.createElement("p")
+    const followingp = document.createElement("p")
+    const cardBio = document.createElement("p")
+
+    
+
+    cardDiv.className = "card"
+    cardInfoDiv.className = "card-info"
+    cardH3.className = "name"
+    userNameP.className = "username"
+
+    
+
+    
+
+    cardImg.src = gitData.avatar_url
+
+    cardH3.textContent = gitData.name
+    userNameP.textContent = gitData.login
+    locationP.textContent =  "Location: " + gitData.location;
+    profileP.textContent = "Profile: " 
+
+    profileUrl.textContent = gitData.html_url
+    profileUrl.href = gitData.html_url;
+    
+
+    followersP.textContent = "Followers: " +  gitData.followers
+    followingp.textContent= "Following: " +  gitData.following
+    cardBio.textContent = gitData.bio
+
+
+    cards.appendChild(cardDiv)
+    cardDiv.append(cardImg)
+    cardDiv.append(cardInfoDiv)
+
+
+    cardInfoDiv.append(cardH3, userNameP, locationP, profileP, followersP,
+                       followingp, cardBio)
+    profileP.appendChild(profileUrl);
+
+    console.log(cards)
+
+
+return cards
+
+
+}
 
 
 // 🛠️ STEP 2: Create a Function to Build the Card
