@@ -25,6 +25,15 @@ function fetchGitData(){
     });
 
 })
+ usersArray.forEach(username => {
+    axios.get(`https://api.github.com/users/${username}`)
+       .then(response => {
+          gitDataCard(response.data);
+       })
+       .catch(error => {
+          console.error(`Error fetching data for ${username}:`, error);
+       });
+ });
 
    .catch(error=> console.log("Error fetching git Data:", error))
 }
