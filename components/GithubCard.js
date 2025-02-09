@@ -6,6 +6,99 @@
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
 
 
+axios.get('https://api.github.com/users/mmc112')
+  .then(response => {
+    const user = response.data; 
+
+   // console.log(user);
+   console.log(response.data);
+    
+   
+    const card = createCard(user);  
+
+    
+    const cards = document.querySelector(".cards");
+    cards.appendChild(card)
+  })
+  .catch(error => {
+    console.error('Khalad aa jira🤔:', error);  
+  });
+  function createCard(user){
+    const card = document.createElement("div");
+    card.className = "card"
+  
+    const img = document.createElement("img");
+    img.src = user.avatar_url
+   
+    const cardInfo = document.createElement("div");
+    cardInfo.className = "card-info"
+  
+    const h3 = document.createElement("h3");
+    h3.className = "name"
+    h3.textContent = user.name
+  
+    const p1 = document.createElement("p");
+    p1.className = "username"
+    p1.textContent = user.login
+  
+    const location = document.createElement("p");
+    location.className = "username"
+    location.textContent = `Location: ${user.location}`
+  
+    const profile = document.createElement("p");
+    profile.innerHTML = `Profile:<a href="${user.html_url}" target="_blank">${user.html_url}</a>`;
+  
+    const followers = document.createElement("p");
+    followers.textContent = `flowers: ${user.followers}`
+
+  
+    const following = document.createElement("p");
+    following.textContent = `following: ${user.following}` 
+  
+  
+    const bio = document.createElement("p");
+    bio.textContent = `Bio: ${user.bio}`
+  
+    cardInfo.appendChild(h3)
+    cardInfo.appendChild(p1)
+    cardInfo.appendChild(location)
+    cardInfo.appendChild(profile)
+    cardInfo.appendChild(followers)
+    cardInfo.appendChild(following)
+    cardInfo.appendChild(bio);
+  
+    card.append(img);
+    card.appendChild(cardInfo)
+   
+    return card
+    
+  }
+  axios.get('https://api.github.com/users/mmc112')
+  .then(response => {
+    const user = response.data;
+
+    
+    axios.get(user.followers_url)
+      .then(followersResponse => {
+        const followers = followersResponse.data;
+
+        
+        followers.forEach(follower => {
+          axios.get(follower.url)  
+            .then(fullFollowerResponse => {
+              const fullFollower = fullFollowerResponse.data;
+
+             
+              const followerCard = createCard(fullFollower);
+              document.querySelector('.cards').appendChild(followerCard);
+            })
+            .catch(err => console.error("Khalad ayaa dhacay ", err));
+        });
+      })
+      .catch(err => console.error("lama helayo followers:", err));
+  })
+  .catch(error => console.error("lama helayo user-ka:", error));
+
 // 🛠️ STEP 2: Create a Function to Build the Card
 // 1️⃣ Write a function that takes a **user object** as a parameter.
 // 2️⃣ Use JavaScript DOM methods to create the following structure:
