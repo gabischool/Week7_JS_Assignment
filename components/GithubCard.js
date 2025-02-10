@@ -50,3 +50,71 @@
 // 🌟 BONUS TIP:
 // 🎨 Style your cards using CSS to make them look polished!
 // 🤖 Try experimenting with different GitHub profiles!
+// Import Axios (Make sure you include Axios in your project)
+// <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+// Import Axios (Make sure you include Axios in your project)
+// <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const username = "abdifatah436";
+    const cardsContainer = document.querySelector(".cards");
+  
+    async function fetchGitHubUser(user) {
+      try {
+        const response = await axios.get(`https://api.github.com/users/${user}`);
+        const userData = response.data;
+        console.log(userData);
+        const userCard = createUserCard(userData);
+        cardsContainer.appendChild(userCard);
+  
+        if (user === username) {
+          fetchFollowers(userData.followers_url);
+        }
+      } catch (error) {
+        console.error("Error fetching GitHub user:", error);
+      }
+    }
+   
+    function createUserCard(user) {
+      const card = document.createElement("div");
+      card.classList.add("card");
+  
+      card.innerHTML = `
+        <img src="${user.avatar_url}" alt="${user.name}'s avatar" />
+        <div class="card-info">
+          <h3 class="name">${user.name || "No Name"}</h3>
+          <p class="username">@${user.login}</p>
+          <p>Location: ${user.location || "Unknown"}</p>
+          <p>Profile: <a href="${user.html_url}" target="_blank">${user.html_url}</a></p>
+          <p>Followers: ${user.followers}</p>
+          <p>Following: ${user.following}</p>
+          <p>Bio: ${user.bio || "No bio available."}</p>
+        </div>
+      `;
+  
+      return card;
+    }
+  
+    async function fetchFollowers(url) {
+      try {
+        const response = await axios.get(url);
+        const followersData = response.data;
+        console.log("Followers:", followersData);
+  
+        followersData.forEach((follower) => {
+          const followerCard = createUserCard(follower);
+          cardsContainer.appendChild(followerCard);
+        });
+      } catch (error) {
+        console.error("Error fetching followers:", error);
+      }
+    }
+  
+  
+    fetchGitHubUser(username);
+  
+    const followersArray = ["torvalds", "gaearon", "addyosmani", "yyx990803", "sindresorhus"];
+    followersArray.forEach(fetchGitHubUser);
+  });
+  
