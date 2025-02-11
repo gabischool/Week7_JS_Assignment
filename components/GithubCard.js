@@ -50,3 +50,88 @@
 // 🌟 BONUS TIP:
 // 🎨 Style your cards using CSS to make them look polished!
 // 🤖 Try experimenting with different GitHub profiles!
+
+function fetchGitData() {
+    axios.get('https://api.github.com/users/nimco-yusuf')
+        .then((response) => {
+            console.log("Success:", response.data);
+
+           
+            gitDataCard(response.data);
+
+            
+            return axios.get(response.data.followers_url);
+        })
+        .then(response => {
+          
+            response.data.forEach(follower => {
+                axios.get(follower.url)
+                    .then(response => {
+                        gitDataCard(response.data);
+                    })
+                    .catch(error => console.log("Error fetching follower:", error));
+            });
+
+            
+           const usersArray = ['faarax', 'john', 'mo', 'alen', 'mustafa'];
+            usersArray.forEach(username => {
+                axios.get(`https://api.github.com/users/${username}`)
+                    .then(response => {
+                        gitDataCard(response.data);
+                    })
+                    .catch(error => {
+                        console.error(`Error fetching data for ${username}:`, error);
+                    });
+            });
+        })
+        .catch(error => console.log("Error fetching GitHub data:", error));
+}
+
+
+fetchGitData();
+
+
+function gitDataCard(gitData) {
+    // Select the main container
+    const cards = document.querySelector(".cards");
+
+    // Create the card elements
+    const cardDiv = document.createElement("div");
+    const cardImg = document.createElement("img");
+    const cardInfoDiv = document.createElement("div");
+    const cardH3 = document.createElement("h3");
+    const userNameP = document.createElement("p");
+    const locationP = document.createElement("p");
+    const profileP = document.createElement("p");
+    const profileUrl = document.createElement('a');
+    const followersP = document.createElement("p");
+    const followingp = document.createElement("p");
+    const cardBio = document.createElement("p");
+
+    // Add classes to the elements
+    cardDiv.className = "card";
+    cardInfoDiv.className = "card-info";
+    cardH3.className = "name";
+    userNameP.className = "username";
+
+    // Set the content for the elements
+    cardImg.src = gitData.avatar_url;
+    cardH3.textContent = gitData.name || 'No Name';
+    userNameP.textContent = gitData.login;
+    locationP.textContent = "Location: " + (gitData.location || 'Not specified');
+    profileP.textContent = "Profile: ";
+    profileUrl.textContent = gitData.html_url;
+    profileUrl.href = gitData.html_url;
+    followersP.textContent = "Followers: " + gitData.followers;
+    followingp.textContent = "Following: " + gitData.following;
+    cardBio.textContent = "Bio: " + (gitData.bio || 'No bio available');
+
+    // Append elements to the card
+    cards.appendChild(cardDiv);
+    cardDiv.append(cardImg, cardInfoDiv);
+    cardInfoDiv.append(cardH3, userNameP, locationP, profileP, followersP, followingp, cardBio);
+    profileP.appendChild(profileUrl);
+
+    return cards;
+}
+
