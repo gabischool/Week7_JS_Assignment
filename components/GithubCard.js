@@ -73,7 +73,7 @@ function fetchGitData() {
             });
 
             
-            const usersArray = ['user1', 'user2', 'user3', 'user4', 'user5'];
+           const usersArray = ['faarax', 'john', 'mo', 'alen', 'mustafa'];
             usersArray.forEach(username => {
                 axios.get(`https://api.github.com/users/${username}`)
                     .then(response => {
