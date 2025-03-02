@@ -1,0 +1,77 @@
+
+
+
+
+// Function to fetch user data from GitHub API
+const fetchUserData = async (username) => {
+  try {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    if (!response.ok) throw new Error(`User not found: ${username}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+};
+
+// Function to create and display a user card
+const createUserCard = (user) => {
+  const cardContainer = document.querySelector('.cards');
+
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const avatar = document.createElement('img');
+  avatar.src = user.avatar_url;
+  avatar.alt = `${user.name}'s avatar`;
+
+  const cardInfo = document.createElement('div');
+  cardInfo.className = 'card-info';
+
+  const name = document.createElement('h3');
+  name.className = 'name';
+  name.textContent = user.name || 'N/A';
+
+  const username = document.createElement('p');
+  username.className = 'username';
+  username.textContent = user.login;
+
+  const location = document.createElement('p');
+  location.textContent = `Location: ${user.location || 'N/A'}`;
+
+  const profile = document.createElement('p');
+  profile.innerHTML = `Profile: <a href="${user.html_url}" target="_blank">${user.html_url}</a>`;
+
+  const followers = document.createElement('p');
+  followers.textContent = `Followers: ${user.followers}`;
+
+  const following = document.createElement('p');
+  following.textContent = `Following: ${user.following}`;
+
+  const bio = document.createElement('p');
+  bio.textContent = `Bio: ${user.bio || 'N/A'}`;
+
+  cardInfo.append(name, username, location, profile, followers, following, bio);
+  card.append(avatar, cardInfo);
+  cardContainer.appendChild(card);
+};
+
+// Function to fetch and display user and their followers
+const displayUserAndFollowers = async (username) => {
+  const user = await fetchUserData(username);
+  if (user) {
+    createUserCard(user);
+
+    // Fetch followers
+    const followersResponse = await fetch(user.followers_url);
+    const followers = await followersResponse.json();
+
+    // Fetch detailed data for each follower
+    for (const follower of followers) {
+      const followerData = await fetchUserData(follower.login);
+      if (followerData) createUserCard(followerData);
+    }
+  }
+};
+
+// Initialize the display with your username
+displayUserAndFollowers('Maashka24')
