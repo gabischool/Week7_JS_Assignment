@@ -33,7 +33,8 @@
 
 
 // 🛠️ STEP 4: Fetch Followers Data
-// 1️⃣ Use the `followers_url` from the GitHub user data.
+// 1️⃣ Use the `followers_url` from the GitHub user data or 
+        //Use this: https://api.github.com/users/your_username/followers
 // 2️⃣ Send a GET request to fetch follower information.
 // 3️⃣ Log the response data to inspect its structure.
 // 4️⃣ For each follower:
