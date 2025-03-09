@@ -1,5 +1,5 @@
 // 🛠️ STEP 1: Fetch GitHub Data
-// 1️⃣ Use Axios to send a GET request to `https://api.github.com/users/<your_name>`.
+// 1️⃣ Use Axios to send a GET request to `https://api.github.com/users/your_github_username`.
 // 2️⃣ Log the response data to inspect its structure.
 // 3️⃣ Look at important fields like `name`, `avatar_url`, `location`, `followers`, `following`, `bio`, and `followers_url`.
 // 4️⃣ Pass the data into a function to create a user card.
