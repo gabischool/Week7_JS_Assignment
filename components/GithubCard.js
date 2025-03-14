@@ -99,7 +99,7 @@ function addCardToDOM(user) {
 // 4️⃣ For each follower:
 //     - Create a card using the function.
 //     - Append the card to the `.cards` container.
-axios.get("followers_url")
+axios.get('https://api.github.com/users/rawdharossy06/followers')
  .then(response => {
    console.log(response.data);
    response.data.forEach(follower => {
