@@ -8,6 +8,7 @@
 function fetchGitHubUser() {
         return axios.get("https://api.github.com/users/eng-ayzer")
             .then(response => response.data)
+            
             .catch((error) => {
                 console.error("Error fetching data:", error);
             });
@@ -73,6 +74,7 @@ const createUserCard = (user) =>{
     cardInfo.append(location);
     cardInfo.append(Profile);
     cardInfo.append(followers);
+
     cardInfo.append(following);
     cardInfo.append(Bio);
     
@@ -121,7 +123,7 @@ fetchGitHubFollowers("eng-ayzer").then(followers => {
     
     const cardContainer = document.querySelector(".cards");
     followers.forEach(follower => {
-       
+      
         const followerCard = createUserCard(follower);
         
         cardContainer.appendChild(followerCard);
