@@ -3,55 +3,137 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-
 
 /* Reset above, our CSS below */
 
-html, body, * {
-  font-family: 'Roboto', sans-serif;
+html,
+body,
+* {
+  font-family: "Roboto", sans-serif;
   box-sizing: border-box;
 }
 
@@ -87,29 +169,41 @@ body {
   font-size: 48px;
 }
 
-.cards {
+/* .cards {
   width: 100%;
+} */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .card {
   width: 100%;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
-  background-color: #FFF;
+  background-color: #ffffffd9;
+
   margin-bottom: 30px;
 }
 
 .card img {
-  width: 150px;
-  height: 150px;
-  border-radius: 3px;
-  margin-right: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  border: 3px solid #1fc8db;
+  /* margin-right: 20px; */
+  margin: 0 auto;
 }
 
 .card .name {
   font-size: 3.4rem;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .card p {
@@ -121,6 +215,50 @@ body {
   font-size: 1.8rem;
   font-style: italic;
   margin: 3px 0 10px;
+  text-align: center;
 }
 
+.card .bio {
+  font-size: 1.6rem;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.card .location {
+  margin-top: 20px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
 
+.card .followers-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.card .followers,
+.card .following {
+  margin: 10px 0;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #fff;
+  padding: 8px;
+  background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.card .profile {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 10px;
+}
+
+/* adding meadia queary */
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
