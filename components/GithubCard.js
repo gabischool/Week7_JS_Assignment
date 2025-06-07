@@ -203,7 +203,7 @@ function loopfollowersArray() {
 
 loopfollowersArray()
 
-function displayFollowersArray() {
+function displayFollowersArray(card) {
         const Maindiv = document.querySelector(".cards")
 
         // Create Main Div Card from HTML
