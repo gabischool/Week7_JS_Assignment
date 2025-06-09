@@ -89,6 +89,12 @@ body {
 
 .cards {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+
 }
 
 .card {
@@ -99,6 +105,10 @@ body {
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
   margin-bottom: 30px;
+}
+
+.card:hover{
+  transform: translateY(-8px);
 }
 
 .card img {
@@ -122,5 +132,61 @@ body {
   font-style: italic;
   margin: 3px 0 10px;
 }
+
+.card a {
+  color: #1e90ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #eee;
+}
+
+body.dark .card {
+  background-color: #1e1e1e;
+  color: #ddd;
+}
+
+#theme-toggle {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 20px;
+  background: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#searchInput, #searchBtn {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#searchBtn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#loading-spinner {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  color: #1e90ff;
+}
+.hidden {
+  display: none;
+}
+
 
 

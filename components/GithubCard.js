@@ -5,6 +5,47 @@
 // 4️⃣ Pass the data into a function to create a user card.
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
 
+axios.get('https://api.github.com/users/sawda-oomar')
+  .then(response => {
+    const userData = response.data;
+    console.log(userData);
+    
+    const Card = createUserCard(userData);
+    
+    document.querySelector('.cards').appendChild(Card);
+  })
+  .catch(error => {
+    console.error('Error The Personal data:', error);
+  });
+
+  axios.get('https://api.github.com/users/mohamed-Abdalle')
+  .then(response => {
+    const userData = response.data;
+    console.log(userData);
+    
+    const Card = createUserCard(userData);
+    
+    document.querySelector('.cards').appendChild(Card);
+  })
+  .catch(error => {
+    console.error('Error The Personal data:', error);
+  });
+
+  axios.get('https://api.github.com/users/saidmahad')
+  .then(response => {
+    const userData = response.data;
+    console.log(userData);
+   
+    const Card = createUserCard(userData);
+   
+    document.querySelector('.cards').appendChild(Card);
+  })
+  .catch(error => {
+    console.error('Error The Personal data:', error);
+  });
+
+
+
 
 // 🛠️ STEP 2: Create a Function to Build the Card
 // 1️⃣ Write a function that takes a **user object** as a parameter.
@@ -25,11 +66,40 @@
 //
 // 3️⃣ Return the created card element.
 
+ 
+    function createUserCard(user) {
+      const card = document.createElement('div');
+      card.classList.add('card');
+
+      card.innerHTML = `
+        <img src="${user.avatar_url}" alt="${user.name}" />
+        <div class="card-info">
+          <h3>${user.name || "Magac la'aan"}</h3>
+          <p><em>${user.login}</em></p>
+          <p>Location: ${user.location || "Lama hayo"}</p>
+          <p>Profile: <a href="${user.html_url}" target="_blank">${user.html_url}</a></p>
+          <p>Followers: ${user.followers}</p>
+          <p>Following: ${user.following}</p>
+          <p>Bio: ${user.bio || "  emty"}</p>
+        </div>
+      `;
+
+      return card;
+    }
+
+
+    
+
 
 // 🛠️ STEP 3: Add the Card to the DOM
 // 1️⃣ Call the function with the GitHub data.
 // 2️⃣ Select the `.cards` container using `document.querySelector('.cards')`.
 // 3️⃣ Append the created card to the `.cards` container.
+
+function appendCardToDOM(card) {
+  const cardsContainer = document.querySelector('.cards');
+  cardsContainer.appendChild(card);
+}
 
 
 // 🛠️ STEP 4: Fetch Followers Data
@@ -41,6 +111,20 @@
 //     - Create a card using the function.
 //     - Append the card to the `.cards` container.
 
+axios.get('https://api.github.com/users/sawda-oomar/followers')
+  .then(response => {
+    const followers = response.data;
+    console.log(followers);
+    
+    followers.forEach(follower => {
+      const followerCard = createUserCard(follower);
+      appendCardToDOM(followerCard);
+    });
+  })
+  .catch(error => {
+    console.error('Error followers:', error);
+  });
+
 
 // 🛠️ STRETCH: Add More GitHub Users
 // 1️⃣ Create an array `followersArray` with at least 5 GitHub usernames.
@@ -51,3 +135,54 @@
 // 🌟 BONUS TIP:
 // 🎨 Style your cards using CSS to make them look polished!
 // 🤖 Try experimenting with different GitHub profiles!
+
+
+const followersArray = [
+  "Moha-Bozka",
+  "mohamed-Abdalle",
+  "saidmahad",
+  "sawda-oomar",
+  "duraanali"
+];
+
+followersArray.forEach(username => {
+  axios.get(`https://api.github.com/users/${username}`)
+    .then(response => {
+      const card = createUserCard(response.data);
+      document.querySelector('.cards').appendChild(card);
+    })
+    .catch(error => {
+      console.error(`Error fetching data for ${username}:`, error);
+    });
+});
+
+
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
+
+document.getElementById('searchBtn').addEventListener('click', () => {
+  const username = document.getElementById('searchInput').value.trim();
+  if (username) {
+    document.querySelector('.cards').innerHTML = ''; // clean cards
+    showLoading();
+    axios.get(`https://api.github.com/users/${username}`)
+      .then(response => {
+        const card = createUserCard(response.data);
+        document.querySelector('.cards').appendChild(card);
+      })
+      .catch(error => {
+        alert("User not found!");
+        console.error(error);
+      })
+      .finally(hideLoading);
+  }
+});
+
+function showLoading() {
+  document.getElementById('loading-spinner').classList.remove('hidden');
+}
+function hideLoading() {
+  document.getElementById('loading-spinner').classList.add('hidden');
+}
+
