@@ -6,6 +6,20 @@
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
 
 
+const URL_API = 'https://api.github.com/users/saynis';
+const getUser = () => {
+        return axios.get(URL_API)
+        .then((response) => response.data)
+        .catch((error) => {
+                console.log(error);
+        })
+};
+
+
+
+
+
+
 // 🛠️ STEP 2: Create a Function to Build the Card
 // 1️⃣ Write a function that takes a **user object** as a parameter.
 // 2️⃣ Use JavaScript DOM methods to create the following structure:
@@ -25,11 +39,81 @@
 //
 // 3️⃣ Return the created card element.
 
+const createCard = (user) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+      
+
+        // image
+        const img = document.createElement('img');
+        img.src = user.avatar_url;
+
+
+        const cardInfo = document.createElement('div');
+        cardInfo.classList.add('card-info');
+
+        // name
+        const name = document.createElement('h3');
+        name.classList.add('name');
+        name.textContent = user.name;
+
+        // username
+        const username = document.createElement('p');
+        username.classList.add('username');
+        username.textContent = user.login;
+
+        // location
+        const location = document.createElement('p');
+        location.textContent = `Location: ${user.location}`;
+
+        // profile
+        const profile = document.createElement('p');
+        profile.innerHTML = `Profile: <a href="${user.html_url}">${user.html_url}</a>`;
+
+        // followers
+        const followers = document.createElement('p');
+        followers.textContent = `Followers: ${user.followers}`;
+
+        // following
+        const following = document.createElement('p');
+        following.textContent = `Following: ${user.following}`;
+
+        // bio
+        const bio = document.createElement('p');
+        bio.textContent = `Bio: ${user.bio}`;
+
+        card.appendChild(img);
+        cardInfo.appendChild(name);
+        cardInfo.appendChild(username);
+        cardInfo.appendChild(location);
+        cardInfo.appendChild(profile);
+        cardInfo.appendChild(followers);
+        cardInfo.appendChild(following);
+        cardInfo.appendChild(bio);
+        card.appendChild(cardInfo);
+
+        return card;
+};
+
 
 // 🛠️ STEP 3: Add the Card to the DOM
 // 1️⃣ Call the function with the GitHub data.
 // 2️⃣ Select the `.cards` container using `document.querySelector('.cards')`.
 // 3️⃣ Append the created card to the `.cards` container.
+
+const displayUser = () => {
+        getUser()
+        .then((response) => {
+                const card = createCard(response);
+                const cardsContainer = document.querySelector('.cards');
+                cardsContainer.appendChild(card);
+              
+        })
+
+};
+
+displayUser();
 
 
 // 🛠️ STEP 4: Fetch Followers Data
@@ -42,10 +126,39 @@
 //     - Append the card to the `.cards` container.
 
 
+const followers_Url = 'https://api.github.com/users/saynis/followers';
+const getFollowers = () => {
+        return axios.get(followers_Url)
+        .then((response) => response)
+        .catch((error) => {
+                console.log(error);
+        })
+};
+
+
+
+const followers = () => {
+        getFollowers()
+        .then((response) => {
+                response.data.forEach(follower => {
+                        const card = createCard(follower);
+                        const cardsContainer = document.querySelector('.cards');
+                        cardsContainer.appendChild(card);
+                });
+        })
+};
+
+followers();
+
+
+
+ 
+
 // 🛠️ STRETCH: Add More GitHub Users
 // 1️⃣ Create an array `followersArray` with at least 5 GitHub usernames.
 // 2️⃣ Loop through the array and send a GET request for each username.
 // 3️⃣ Create a card for each user and append it to `.cards`.
+
 
 
 // 🌟 BONUS TIP:
