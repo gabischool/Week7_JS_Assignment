@@ -7,17 +7,25 @@
  
   </head>
   <body>
+    <input type="text" id="searchInput" placeholder="Enter GitHub username" />
+<button id="searchBtn">Search</button>
+
+<div id="loading-spinner" class="hidden">Loading...</div>
+
     <div class="container">
       <div class="header">
         <img src="assets/gabilogo.png" alt="Gabi School Logo"/>
         <p>❤️'s</p>
         <img src="./assets/githublogo.png" alt="GitHub Logo" />
       </div>
-      <div class="cards"></div>
+      <div class="cards"><button id="theme-toggle">🌓 Toggle Theme</button>
+</div>
     </div>
     <!-- This is the axios CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./components/GithubCard.js"></script>
+
+    
   </body>
 </html>
 <!-- Do NOT change anything here except TODO line -->
