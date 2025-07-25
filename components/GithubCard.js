@@ -1,53 +1,84 @@
-// 🛠️ STEP 1: Fetch GitHub Data
-// 1️⃣ Use Axios to send a GET request to `https://api.github.com/users/your_github_username`.
-// 2️⃣ Log the response data to inspect its structure.
-// 3️⃣ Look at important fields like `name`, `avatar_url`, `location`, `followers`, `following`, `bio`, and `followers_url`.
-// 4️⃣ Pass the data into a function to create a user card.
-// 5️⃣ Append the created card to the `.cards` container in the DOM.
+function fetchGitHubData(_username = 'Swar1904') {
+  axios.get(`https://api.github.com/users/${swar1904}`) // Replace 'swar1904' with the username you want to fetch data for
+        .catch(_err => { 
+    .then(response => {
+      const userData = response.data;
+      console.log('User Data:', userData);
 
+      const userCard = createUserCard(userData);
+      const cardsContainer = document.querySelector('.cards');
+      cardsContainer.appendChild(userCard);
+        // Fetch followers data
+      return axios.get(userData.followers_url);
+    })         
+    .then(followersResponse => {
+      console.log('Followers:', followersResponse.data);
+      const followers = followersResponse.data;
+      const cardsContainer = document.querySelector('.cards');
 
-// 🛠️ STEP 2: Create a Function to Build the Card
-// 1️⃣ Write a function that takes a **user object** as a parameter.
-// 2️⃣ Use JavaScript DOM methods to create the following structure:
-//
-//     <div class="card">
-//       <img src="{avatar_url}" />
-//       <div class="card-info">
-//         <h3 class="name">{name}</h3>
-//         <p class="username">{login}</p>
-//         <p>Location: {location}</p>
-//         <p>Profile: <a href="{html_url}">{html_url}</a></p>
-//         <p>Followers: {followers}</p>
-//         <p>Following: {following}</p>
-//         <p>Bio: {bio}</p>
-//       </div>
-//     </div>
-//
-// 3️⃣ Return the created card element.
+      followers.forEach(follower => {
+        axios.get(`https://api.github.com/users/${follower.login}`)
+          .then(followerDataResponse => {
+            const followerData = followerDataResponse.data;
+            const followerCard = createUserCard(followerData);
+            cardsContainer.appendChild(followerCard);
+          })
+          .catch(err => console.error('Error fetching follower data:', err));
+      });
+    })
+    .catch(error => console.error('Error fetching user or followers:', error));
+}
 
+function createUserCard(user) {
+  const card = document.createElement('div');
+  card.classList.add('card');
 
-// 🛠️ STEP 3: Add the Card to the DOM
-// 1️⃣ Call the function with the GitHub data.
-// 2️⃣ Select the `.cards` container using `document.querySelector('.cards')`.
-// 3️⃣ Append the created card to the `.cards` container.
+  const avatar = document.createElement('img');
+  avatar.src = user.avatar_url;
+  card.appendChild(avatar);
 
+  const cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
 
-// 🛠️ STEP 4: Fetch Followers Data
-// 1️⃣ Use the `followers_url` from the GitHub user data or 
-        //Use this: https://api.github.com/users/your_username/followers
-// 2️⃣ Send a GET request to fetch follower information.
-// 3️⃣ Log the response data to inspect its structure.
-// 4️⃣ For each follower:
-//     - Create a card using the function.
-//     - Append the card to the `.cards` container.
+  const name = document.createElement('h3');
+  name.classList.add('name');
+  name.textContent = user.name || 'No name provided';
+  cardInfo.appendChild(name);
 
+  const username = document.createElement('p');
+  username.classList.add('username');
+  username.textContent = user.login;
+  cardInfo.appendChild(username);
 
-// 🛠️ STRETCH: Add More GitHub Users
-// 1️⃣ Create an array `followersArray` with at least 5 GitHub usernames.
-// 2️⃣ Loop through the array and send a GET request for each username.
-// 3️⃣ Create a card for each user and append it to `.cards`.
+  const location = document.createElement('p');
+  location.textContent = `Location: ${user.location || 'Unknown'}`;
+  cardInfo.appendChild(location);
 
+  const profile = document.createElement('p');
+  profile.innerHTML = `Profile: <a href="${user.html_url}" target="_blank">${user.html_url}</a>`;
+  cardInfo.appendChild(profile);
 
-// 🌟 BONUS TIP:
-// 🎨 Style your cards using CSS to make them look polished!
-// 🤖 Try experimenting with different GitHub profiles!
+  const followers = document.createElement('p');
+  followers.textContent = `Followers: ${user.followers}`;
+  cardInfo.appendChild(followers);
+
+  const following = document.createElement('p');
+  following.textContent = `Following: ${user.following}`;
+  cardInfo.appendChild(following);
+
+  const bio = document.createElement('p');
+  bio.textContent = `Bio: ${user.bio || 'No bio available'}`;
+  cardInfo.appendChild(bio);
+
+  card.appendChild(cardInfo);
+
+  return card;
+}
+
+// Run with your GitHub username
+fetchGitHubData('Swar1904');
+// This code fetches GitHub user data and displays it in a card format
+// It also fetches the followers of the user and displays their data in similar cards
+// Make sure to include the necessary CSS styles in your index.css file for proper display
+// Example CSS styles can be found in the index.css file
+// Ensure you have axios included in your project for the API calls to work             
