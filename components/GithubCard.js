@@ -1,6 +1,7 @@
 // fetched user from github
 function user() {
-  return axios.get(`https://api.github.com/users/safiyacodes`)
+  return axios
+    .get(`https://api.github.com/users/safiyacodes`)
     .then((response) => {
       return response.data;
     })
@@ -8,8 +9,6 @@ function user() {
       console.log(error);
     });
 }
-
-
 
 // create the HTML element with DOM
 function createUserCard(user) {
@@ -27,23 +26,23 @@ function createUserCard(user) {
   name.className = "name";
 
   const userName = document.createElement("p");
-  userName.textContent = `Username: ${user.login}`;
+  userName.textContent = user.login;
   userName.className = "username";
 
   const location = document.createElement("p");
   location.textContent = `Location: ${user.location}`;
 
   const profile = document.createElement("p");
-  profile.textContent = `Profile: ${user.html_url}`;
+  profile.innerHTML = `Profile: <a href="${user.html_url}" target="_blank" style="color:blue">${user.html_url}</a>`;
 
   const followers = document.createElement("p");
-  followers.textContent = `Followers: ${user.followers !== undefined ? user.followers : "N/A"}`;
+  followers.textContent = `Followers: ${user.followers}`;
 
   const following = document.createElement("p");
-  following.textContent = `Following: ${user.following !== undefined ? user.following : "N/A"}`;
+  following.textContent = `Following: ${user.following}`;
 
   const bio = document.createElement("p");
-  bio.textContent = `Bio: ${user.bio || "No bio"}`;
+  bio.textContent = `Bio: ${user.bio}`;
 
   // append elements
   cardInfo.append(name, userName, location, profile, followers, following, bio);
@@ -52,7 +51,7 @@ function createUserCard(user) {
   return mainDiv;
 }
 
-// function that connects everything
+// function that displays user info
 function displayUserCard() {
   const cardContainer = document.querySelector(".cards");
   cardContainer.innerHTML = "";
@@ -62,23 +61,18 @@ function displayUserCard() {
   });
 }
 
-
-
-
-
-
+//function that displays following users
 function fetchFollowing() {
-  axios.get("https://api.github.com/users/safiyacodes/following")
+  axios
+    .get("https://api.github.com/users/safiyacodes/following")
     .then((response) => {
       const users = response.data;
       const cardContainer = document.querySelector(".cards");
-     
 
       users.forEach((user) => {
-        axios.get(user.url)
-          .then((res) => {
-            cardContainer.append(createUserCard(res.data));
-          });
+        axios.get(user.url).then((res) => {
+          cardContainer.append(createUserCard(res.data));
+        });
       });
     })
     .catch((error) => {
@@ -86,5 +80,5 @@ function fetchFollowing() {
     });
 }
 
-displayUserCard()
-fetchFollowing() 
+displayUserCard();
+fetchFollowing();
