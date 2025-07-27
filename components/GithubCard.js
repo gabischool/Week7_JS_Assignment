@@ -6,7 +6,7 @@
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
 
 function fetchGithubData() {
-  return axios.get("https://api.github.com/users/alqaazimi")
+  return axios.get("https://api.github.com/users/alqazimi")
     .then(response => {
   console.log("response", response.data);
   return response.data;
@@ -126,7 +126,7 @@ return card
 
 
 function fetchFollowerData() {
-        return axios.get("https://api.github.com/users/alqaazimi/followers")
+        return axios.get("https://api.github.com/users/alqazimi/followers")
         .then((response) => {
                 return response.data
                 })
