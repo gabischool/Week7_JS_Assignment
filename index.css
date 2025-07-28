@@ -1,8 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
+/* Eric Meyer's CSS Reset - http://meyerweb.com/eric/tools/css/reset/ */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,32 +19,39 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
+/* ====== Custom Styles Below ====== */
 
-/* Reset above, our CSS below */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 html, body, * {
   font-family: 'Roboto', sans-serif;
@@ -58,9 +61,12 @@ html, body, * {
 html {
   font-size: 62.5%;
 }
+
 body {
   background: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  padding: 2rem;
 }
+
 .container {
   max-width: 800px;
   margin: 50px auto;
@@ -84,7 +90,8 @@ body {
 }
 
 .header p {
-  font-size: 48px;
+  font-size: 4.8rem;
+  color: #fff;
 }
 
 .cards {
@@ -95,17 +102,46 @@ body {
   width: 100%;
   padding: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
   margin-bottom: 30px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 600px) {
+  .card {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 .card img {
   width: 150px;
   height: 150px;
   border-radius: 3px;
-  margin-right: 20px;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 600px) {
+  .card img {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card .name {
@@ -123,4 +159,18 @@ body {
   margin: 3px 0 10px;
 }
 
+.card a {
+  color: #1fc8db;
+  text-decoration: none;
+  font-weight: bold;
+}
 
+.card a:hover {
+  text-decoration: underline;
+}
+.card .stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
