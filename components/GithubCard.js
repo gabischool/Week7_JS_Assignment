@@ -4,42 +4,19 @@
 // 3️⃣ Look at important fields like `name`, `avatar_url`, `location`, `followers`, `following`, `bio`, and `followers_url`.
 // 4️⃣ Pass the data into a function to create a user card.
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
-
-function fetchGitHub() {
-    axios.get('https://api.github.com/users/swar1904')
-    .then(response => {
-      return  response.data;
-      createCard(response.data);
-    })
-    .catch(error => {
-      console.error( error);
-    });
+        function fetchGitHab() {
+        return axios.get("https://api.github.com/users/swar1904")
+        .then((response) => {
+                return response.data
+        })
+        .catch((error) => {
+                console.log(error)
+        })
 }
-    
-
-
-
-  
-
 
 // 🛠️ STEP 2: Create a Function to Build the Card
 // 1️⃣ Write a function that takes a **user object** as a parameter.
 // 2️⃣ Use JavaScript DOM methods to create the following structure:
-//
-//     <div class="card">
-//       <img src="{avatar_url}" />
-//       <div class="card-info">
-//         <h3 class="name">{name}</h3>
-//         <p class="username">{login}</p>
-//         <p>Location: {location}</p>
-//         <p>Profile: <a href="{html_url}">{html_url}</a></p>
-//         <p>Followers: {followers}</p>
-//         <p>Following: {following}</p>
-//         <p>Bio: {bio}</p>
-//       </div>
-//     </div>
-//
-// 3️⃣ Return the created card element.
 function buildUsercard(user) {
         const card = document.createElement("div");
         card.className = "card";
@@ -61,27 +38,23 @@ function buildUsercard(user) {
         cardInfo.appendChild(usernameElement);
 
         const locationElement = document.createElement("p");
-        locationElement.textContent = user.location;
+        locationElement.textContent = `Location: ${user.location}`;
         cardInfo.appendChild(locationElement);
 
         const profileElement = document.createElement("p");
-        const profileLink = document.createElement("a");
-        profileLink.href = user.html_url;
-        profileLink.textContent = user.html_url;
-        profileElement.textContent = user.Profile;
-        profileElement.appendChild(profileLink);
+        profileElement.innerHTML = `Profile: <a href="${user.html_url}">${user.html_url}</a>`;
         cardInfo.appendChild(profileElement);
 
         const followersElement = document.createElement("p");
-        followersElement.textContent = user.follower;
+        followersElement.textContent = `Followers: ${user.followers}`;
         cardInfo.appendChild(followersElement);
 
         const followingElement = document.createElement("p");
-        followingElement.textContent = user.following;
+        followingElement.textContent = `Following: ${user.following}`;
         cardInfo.appendChild(followingElement);
 
         const bioElement = document.createElement("p");
-        bioElement.textContent = user.bio;
+        bioElement.textContent = `Bio: ${user.bio}`;
         cardInfo.appendChild(bioElement);
 
         card.appendChild(cardInfo);
@@ -91,14 +64,28 @@ function buildUsercard(user) {
 
        const cardsContainer = document.querySelector('.cards');
        
-        cardsContainer.appendChild(buildUsercard(fetchGitHab()));
+        // Remove this incorrect usage, fetchGitHab() returns a Promise, not a user object
+        // cardsContainer.appendChild(buildUsercard(fetchGitHab()));
 
+        fetchGitHab().then(user => {
+            cardsContainer.appendChild(buildUsercard(user));
+        });
+//         <p class="username">{login}</p>
+//         <p>Location: {location}</p>
+//         <p>Profile: <a href="{html_url}">{html_url}</a></p>
+//         <p>Followers: {followers}</p>
+//         <p>Following: {following}</p>
+//         <p>Bio: {bio}</p>
+//       </div>
+//     </div>
+//
+// 3️⃣ Return the created card element.
 // 🛠️ STEP 3: Add the Card to the DOM
 // 1️⃣ Call the function with the GitHub data.
 // 2️⃣ Select the `.cards` container using `document.querySelector('.cards')`.
 // 3️⃣ Append the created card to the `.cards` container.
 function fetchFollowerData() {
-        return axios.get("https://api.github.com/users/anshur970/followers")
+        return axios.get("https://api.github.com/users/safiyacodes/followers")
         .then((response) => {
                 return response.data
                 })
@@ -106,6 +93,20 @@ function fetchFollowerData() {
                 console.log(error)
         })
   }
+
+function displaynewUser(){      
+        
+    const cardsContainer = document.querySelector(".cards")
+        cardsContainer.innerHTML = ""
+         fetchGitHab().then((currentUser) =>
+        cardsContainer.append(buildUsercard(currentUser)))
+        fetchFollowerData().then((following)=>{
+                following.map((user)=>{
+                        cardsContainer.append(buildUsercard(user))
+                })
+        })
+}
+
 const button = document.createElement("button")
 button.addEventListener("click", displaynewUser)
 
@@ -121,18 +122,11 @@ displaynewUser();
 //     - Append the card to the `.cards` container.
 
 
-
 // 🛠️ STRETCH: Add More GitHub Users
 // 1️⃣ Create an array `followersArray` with at least 5 GitHub usernames.
 // 2️⃣ Loop through the array and send a GET request for each username.
 // 3️⃣ Create a card for each user and append it to `.cards`.
-// 4️⃣ Use the `Promise.all` method to handle multiple requests.
-// 5️⃣ Use `Promise.all` to wait for all requests to complete before appending the cards to the DOM.
-// 6️⃣ Use `Promise.all` to wait for all requests to complete before appending the cards to the DOM.
-// 7️⃣ Use `Promise.all` to wait for all requests to complete before appending the cards to the DOM.
-// 8️⃣ Use `Promise.all` to wait for all requests to complete before appending the cards to the DOM.
-// 9️⃣ Use `Promise.all` to wait for all requests to complete before appending the cards to the DOM.
-// 🔟 Use `Promise.all` to wait for all requests to complet     e
+
 
 // 🌟 BONUS TIP:
 // 🎨 Style your cards using CSS to make them look polished!
