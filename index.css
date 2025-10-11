@@ -122,5 +122,52 @@ body {
   font-style: italic;
   margin: 3px 0 10px;
 }
+/* ========== Card Styling ========== */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  padding: 15px 20px;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* makes it round */
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #111;
+}
+
+.card-info p {
+  margin: 0;
+  color: #444;
+  font-size: 14px;
+}
+
+.card-info a {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.card-info a:hover {
+  text-decoration: underline;
+}
 
 
