@@ -22,6 +22,7 @@
 //         <p>Bio: {bio}</p>
 //       </div>
 //     </div>
+
 //
 // 3️⃣ Return the created card element.
 
@@ -51,3 +52,59 @@
 // 🌟 BONUS TIP:
 // 🎨 Style your cards using CSS to make them look polished!
 // 🤖 Try experimenting with different GitHub profiles!
+function displayGithub() {
+        axios.get("https://api.github.com/users/amiin5377-amo") 
+        .then((response) => {  
+                const userData = response.data
+                const userCard = createUserCard(userData)
+                const cardContainer = document.querySelector(".cards").append(userCard)
+                return axios.get(userData.followers_url)
+})
+
+.then((displayfollowers) => {
+        const cardContainer = document.querySelector(".cards")
+displayfollowers.data.forEach(friendfollow => {
+      const followerCard = createUserCard(friendfollow)  
+      cardContainer.append(followerCard)
+      
+});
+
+});
+
+}
+
+displayGithub()
+function createUserCard(user) {
+       const card = document.createElement("div")
+       card.className = "card"
+       const image = document.createElement("img")
+       image.src = user.avatar_url
+       const cardInfo = document.createElement("div")
+       cardInfo.className = "card-info"
+       const name = document.createElement("h3")
+       name.className = "name"
+       name.textContent = user.name
+       const username = document.createElement("p")
+       username.className = "username"
+       username.textContent = user.login
+       
+      const location = document.createElement("p")
+      location.textContent = user.location
+      const Profile = document.createElement("p") 
+       Profile.href = user.html_url
+      Profile.textContent = user.html_url
+      const Followers = document.createElement("p")
+      Followers.textContent = user.followers
+      const Following = document.createElement("p")
+      Following.textContent = user.following
+      const Bio = document.createElement("p")
+      Bio.textContent = user.Bio
+      card.append(image,cardInfo)
+      cardInfo.append(name,username,location,Profile,Followers,Following,Bio)
+      
+      return card;
+      
+
+}
+
+
