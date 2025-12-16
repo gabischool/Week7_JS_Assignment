@@ -5,6 +5,26 @@
 // 4️⃣ Pass the data into a function to create a user card.
 // 5️⃣ Append the created card to the `.cards` container in the DOM.
 
+const apiURL = "https://api.github.com/users/Abdikadir21";
+
+function fetchApi() {
+
+  return axios
+
+    .get(apiURL)
+
+    .then(response => response.data)
+
+    .catch(error => {
+
+      console.log("Error fetching user:", error);
+
+      throw error;
+
+    });
+}
+
+  
 
 // 🛠️ STEP 2: Create a Function to Build the Card
 // 1️⃣ Write a function that takes a **user object** as a parameter.
@@ -25,11 +45,90 @@
 //
 // 3️⃣ Return the created card element.
 
+function createUserCard(user) {
+
+  const card = document.createElement("div");
+  
+  card.className = "card";
+
+  const img = document.createElement("img");
+
+  img.src = user.avatar_url;
+
+  img.alt = user.login;
+
+  const cardInfo = document.createElement("div");
+
+  cardInfo.className = "card-info";
+
+  const name = document.createElement("h3");
+
+  name.className = "name";
+
+  name.textContent = user.name || user.login;
+
+  const username = document.createElement("p");
+
+  username.className = "username";
+
+  username.textContent = user.login;
+
+  const location = document.createElement("p");
+
+  location.textContent = `Location: ${user.location || "Not specified"}`;
+
+  const profile = document.createElement("p");
+
+  profile.innerHTML = `Profile: <a href="${user.html_url}" target="_blank">${user.html_url}</a>`;
+
+  const followers = document.createElement("p");
+
+  followers.textContent = `Followers: ${user.followers ?? 0}`;
+
+  const following = document.createElement("p");
+
+  following.textContent = `Following: ${user.following ?? 0}`;
+
+  const bio = document.createElement("p");
+
+  bio.textContent = `Bio: ${user.bio || "No bio"}`;
+
+  cardInfo.append(
+    name,
+    username,
+    location,
+    profile,
+    followers,
+    following,
+    bio
+  );
+
+  card.append(img, cardInfo);
+
+  return card;
+}
+
+
 
 // 🛠️ STEP 3: Add the Card to the DOM
 // 1️⃣ Call the function with the GitHub data.
 // 2️⃣ Select the `.cards` container using `document.querySelector('.cards')`.
 // 3️⃣ Append the created card to the `.cards` container.
+
+function displayGitHub() {
+
+  const cardsContainer = document.querySelector(".cards");
+
+  fetchApi()
+
+    .then(userData => {
+
+      const userCard = createUserCard(userData);
+
+      cardsContainer.append(userCard);
+
+      return axios.get(userData.followers_url);
+    })
 
 
 // 🛠️ STEP 4: Fetch Followers Data
@@ -40,6 +139,27 @@
 // 4️⃣ For each follower:
 //     - Create a card using the function.
 //     - Append the card to the `.cards` container.
+
+    .then(followersResponse => {
+
+      followersResponse.data.forEach(follower => {
+
+        const followerCard = createUserCard(follower);
+
+        cardsContainer.append(followerCard);
+      });
+    })
+
+    .catch(err => {
+
+      console.log("Error in displayGitHub:", err);
+    });
+}
+
+
+displayGitHub();
+ 
+
 
 
 // 🛠️ STRETCH: Add More GitHub Users
