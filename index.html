@@ -1,23 +1,29 @@
-<!-- Do NOT change anything here -->
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./index.css">
- 
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <img src="assets/gabilogo.png" alt="Gabi School Logo"/>
-        <p>❤️'s</p>
-        <img src="./assets/githublogo.png" alt="GitHub Logo" />
-      </div>
-      <div class="cards"></div>
-    </div>
-    <!-- This is the axios CDN -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./components/GithubCard.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Joke Generator — Week 7</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="card">
+
+    <header>
+      <h1>😄 Random Joke</h1>
+      <p class="hint">Powered by a real API. Click below for a new one.</p>
+    </header>
+
+    <section class="joke">
+      <p id="setup" class="setup">Loading...</p>
+      <p id="punchline" class="punchline"></p>
+    </section>
+
+    <button id="new-joke" class="btn">New Joke 🔄</button>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
 </html>
-<!-- Do NOT change anything here except TODO line -->
