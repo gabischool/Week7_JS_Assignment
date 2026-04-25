@@ -1,97 +1,112 @@
-# 🌟 GitHub User Cards
+# Week 7 — Random Joke Generator 😄
 
-Welcome to the **GitHub User Cards** project! 🎉 In this project, you'll interact with the **GitHub API** to create dynamic social cards displaying user profiles. The goal is to practice working with APIs, promises, and DOM manipulation while having some fun! 🚀
+You're going to fetch a joke from a real API and show it on the page. Click a button — get a new joke. That's it. Small project, big concepts.
 
-## 🛠️ What You'll Practice
+This is the foundation of every modern web app: **fetch data → show it on the page**.
 
-### 🖥️ JavaScript
+## Setup
 
-- 🛠️ Building DOM components using JavaScript functions.
-- 📦 Using 3rd-party libraries like **Axios**.
-- 🤝 Understanding promises: `.then` & `.catch`.
-- 🌐 Making HTTP GET requests.
-- 📚 Utilizing array methods.
+1. **Fork** this repo to your account.
+2. Clone it locally and open in your editor.
+3. Open `index.html` in the browser.
+4. Edit `main.js`. Refresh the page to see changes.
 
-### 🌐 DOM
+## The API
 
-- 🖱️ Selecting elements.
-- ✍️ Manipulating the DOM.
-- 🎯 Handling events and event listeners.
+We're using a free, no-signup-required jokes API:
 
----
+```
+https://official-joke-api.appspot.com/random_joke
+```
 
-## 🚀 Project Setup
+Open it in your browser — you'll see a JSON response like:
 
-### ⚙️ Setting Up the Project with Git
+```json
+{
+  "type": "general",
+  "setup": "Why don't scientists trust atoms?",
+  "punchline": "Because they make up everything!",
+  "id": 32
+}
+```
 
-Follow these steps to set up your project and start coding:
+Your job is to fetch that data and show `setup` + `punchline` on the page.
 
-1. 🍴 **Fork** this repository to your own GitHub account.
-2. 📥 **Clone** your forked repository to your local machine. *(Don't clone the original repo by mistake!)*  
+## Tasks
 
-   ```bash
-   git clone <your-forked-repo-url>
-   ```
+### Task 1 — Fetch a Joke 🎯
 
-3. 🌿 **Create a new branch** for your work:
+Write an `async function getJoke()` that:
+1. Uses `fetch()` to hit the URL above
+2. Calls `.json()` on the response to get the data
+3. Returns the joke object
 
-   ```bash
-   git checkout -b <your-first-name-last-name>
-   ```
-
-4. 💾 **Commit your changes** regularly as you progress.
-
-   ```bash
-   git add .
-   git commit -m "Descriptive commit message"
-   ```
-
-5. 🔄 **Push your changes** to GitHub:
-
-   ```bash
-   git push origin <your-first-name-last-name>
-   ```
-
-### 📝 Completing the Project
-
-1. Submit a **Pull Request** to merge your branch into `main` on your forked repository.  
-   👉 **Note:** Do not merge your own pull request! 😅
-2. Await feedback and approval from your instructor. 📩
+> 💡 Use `async`/`await` (not `.then()` chains).
 
 ---
 
-## 🧩 Project Tasks
+### Task 2 — Show the Joke on the Page 📺
 
-### 🌐 Part 1: Request Data from the GitHub API
+Inside `getJoke()`, after you get the data:
+1. Find `#setup` and `#punchline` with `document.querySelector`
+2. Set their `textContent` to the joke's `setup` and `punchline`
 
-- 📝 Follow the instructions in the `components/GithubCard.js` file to send a GET request to the GitHub API.  
-  Use your GitHub username to start exploring the API data! 🌟
-
----
-
-### 🛠️ Part 2: Create the Component Function
-
-- 📊 Analyze the data returned by the API to understand its structure.
-- 🔧 Use the data to dynamically create the HTML template provided in `components/GithubCard.js`.
-- 🖼️ Add your card (based on your GitHub profile) to the DOM.
+Refresh the page — a joke should appear.
 
 ---
 
-## ✨ Stretch Goals (Optional)
+### Task 3 — Call the Function on Page Load 🚀
 
-Feeling ambitious? 🧗‍♂️ Try these for extra practice:
-
-1. 🤝 Retrieve your **followers list** from the API and programmatically create cards for each follower.
-2. 🔄 **Automate followers' cards creation:** Programmatically fetch and display follower data.
-3. 🔍 **Expandable cards:** Add a button to expand/collapse cards and include more user info.
-4. 📈 **GitHub Contribution Graph:** Embed your GitHub contribution graph! [Learn how here](https://stackoverflow.com/questions/34516592/embed-github-contributions-graph-in-website).
+At the bottom of your file, just call `getJoke()`. The page should now show a joke as soon as it loads.
 
 ---
 
-## 📝 Reminder
+### Task 4 — "New Joke" Button 🔄
 
-Only Parts 1 and 2 are required. Stretch goals are optional for additional practice—don’t stress if you can’t complete them! 💪
+The page has a button: `<button id="new-joke">New Joke</button>`.
+
+Add an event listener so clicking it fetches a new joke. Each click should replace the joke on screen.
+
+> 💡 You already wrote `getJoke()` — just call it again inside the click handler!
 
 ---
 
-🚀 **Happy Coding!** ✨
+### Task 5 — Handle Errors 🛡️
+
+Wrap your `fetch` code in a `try / catch`. If the API ever fails, log the error and show "Couldn't load a joke" on the page instead of breaking.
+
+```js
+try {
+  // fetch + display
+} catch (error) {
+  console.error(error);
+  // show error message in the UI
+}
+```
+
+---
+
+## ✅ When you're done
+
+- A joke shows when the page loads
+- Clicking "New Joke" gets a different joke each time
+- If you turn off your wifi and click the button, the page shows an error message instead of breaking
+
+## Submitting
+
+```bash
+git add .
+git commit -m "Complete Week 7 random joke generator"
+git push
+```
+
+Submit your repo link.
+
+## 🚀 Stretch (optional)
+
+- Show a "Loading..." message while waiting for the joke
+- Disable the button while a joke is loading
+- Try a different API:
+  - 🐶 Dog photos: `https://dog.ceo/api/breeds/image/random`
+  - 🐱 Cat facts: `https://catfact.ninja/fact`
+  - 🎓 Pokémon: `https://pokeapi.co/api/v2/pokemon/pikachu`
