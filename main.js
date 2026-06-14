@@ -6,39 +6,55 @@
    ============================================================ */
 
 
-// The API endpoint — returns a random joke object
-const API_URL = "https://official-joke-api.appspot.com/random_joke";
+// The API endpoint that returns a random joke
+const JOKE_URL = "https://official-joke-api.appspot.com/random_joke";
+
+// Grab the elements where the joke will go
+const setupEl = document.getElementById("setup");
+const punchlineEl = document.getElementById("punchline");
 
 
 /* ------------------------------------------------------------
-   Task 1 + 2 + 5: getJoke()
+   Task 1 + Task 5: fetchJoke()
 
-   1. Use fetch() + await to get the data from API_URL
-   2. Use .json() to convert the response to a JS object
-   3. Find #setup and #punchline elements with querySelector
-   4. Set their .textContent to data.setup and data.punchline
-   5. Wrap everything in try / catch — on error, show
-      "Couldn't load a joke" in the #setup element
+   1. Use fetch() + await to get the data from JOKE_URL
+   2. Use await response.json() to turn it into a JS object
+   3. Pass the joke to displayJoke()
+   5. Wrap it all in try / catch — on error, console.error it
+      and show "Couldn't load a joke" in setupEl
    ------------------------------------------------------------ */
 
-async function getJoke() {
+async function fetchJoke() {
+  // Show a loading message while we wait for the data
+  setupEl.textContent = "Loading...";
+  punchlineEl.textContent = "";
+
   // ✍️ Solve it here ✍️
 }
 
 
+/* ------------------------------------------------------------
+   Task 2: displayJoke(joke)
+
+   Put the joke on the page:
+   - set setupEl.textContent to joke.setup
+   - set punchlineEl.textContent to joke.punchline
+   ------------------------------------------------------------ */
+
+function displayJoke(joke) {
+  // ✍️ Solve it here ✍️
+}
 
 
 /* ------------------------------------------------------------
-   Task 3: Run getJoke() when the page loads
+   Task 4: When #new-joke is clicked, load a new joke
    ------------------------------------------------------------ */
 
 // ✍️ Solve it here ✍️
 
 
-
-
 /* ------------------------------------------------------------
-   Task 4: When #new-joke is clicked, load a new joke
+   Task 3: Load a joke when the page opens
    ------------------------------------------------------------ */
 
 // ✍️ Solve it here ✍️
