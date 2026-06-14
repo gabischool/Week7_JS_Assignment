@@ -30,19 +30,24 @@ async function fetchJoke() {
   punchlineEl.textContent = "";
 
   // ✍️ Solve it here ✍️
+
+   
 }
 
 
 /* ------------------------------------------------------------
    Task 2: displayJoke(joke)
 
-   Put the joke on the page:
+   Put the joke on the page, inside the displayJoke function:
    - set setupEl.textContent to joke.setup
    - set punchlineEl.textContent to joke.punchline
+   
    ------------------------------------------------------------ */
 
 function displayJoke(joke) {
   // ✍️ Solve it here ✍️
+
+   
 }
 
 
@@ -53,8 +58,12 @@ function displayJoke(joke) {
 // ✍️ Solve it here ✍️
 
 
+
+
 /* ------------------------------------------------------------
    Task 3: Load a joke when the page opens
    ------------------------------------------------------------ */
 
 // ✍️ Solve it here ✍️
+
+
