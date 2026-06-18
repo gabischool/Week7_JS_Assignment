@@ -5,14 +5,12 @@
    Click the button to load a new one.
    ============================================================ */
 
-
 // The API endpoint that returns a random joke
 const JOKE_URL = "https://official-joke-api.appspot.com/random_joke";
 
 // Grab the elements where the joke will go
 const setupEl = document.getElementById("setup");
 const punchlineEl = document.getElementById("punchline");
-
 
 /* ------------------------------------------------------------
    Task 1 + Task 5: fetchJoke()
@@ -30,10 +28,15 @@ async function fetchJoke() {
   punchlineEl.textContent = "";
 
   // ✍️ Solve it here ✍️
-
-   
+  try {
+    const response = await fetch(JOKE_URL);
+    const joke = await response.json();
+    console.log(joke);
+    displayJoke(joke);
+  } catch (error) {
+    console.log(Error);
+  }
 }
-
 
 /* ------------------------------------------------------------
    Task 2: displayJoke(joke)
@@ -46,24 +49,21 @@ async function fetchJoke() {
 
 function displayJoke(joke) {
   // ✍️ Solve it here ✍️
-
-   
+  setupEl.textContent = joke.setup;
+  punchlineEl.textContent = joke.punchline;
 }
-
 
 /* ------------------------------------------------------------
    Task 4: When #new-joke is clicked, load a new joke
    ------------------------------------------------------------ */
 
 // ✍️ Solve it here ✍️
-
-
-
+const button = document.getElementById("new-joke");
+button.addEventListener("click", fetchJoke);
 
 /* ------------------------------------------------------------
    Task 3: Load a joke when the page opens
    ------------------------------------------------------------ */
 
 // ✍️ Solve it here ✍️
-
-
+fetchJoke()
