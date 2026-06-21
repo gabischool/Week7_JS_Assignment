@@ -29,7 +29,19 @@ async function fetchJoke() {
   setupEl.textContent = "Loading...";
   punchlineEl.textContent = "";
 
-  // ✍️ Solve it here ✍️
+  setupEl.textContent = "Loading...";
+  punchlineEl.textContent = "";
+
+  try {
+    const response = await fetch(JOKE_URL);
+    const joke = await response.json();
+
+    displayJoke(joke);
+  } catch (error) {
+    console.error(error);
+    setupEl.textContent = "Couldn't load a joke";
+    punchlineEl.textContent = "";
+  }
 
    
 }
@@ -45,7 +57,9 @@ async function fetchJoke() {
    ------------------------------------------------------------ */
 
 function displayJoke(joke) {
-  // ✍️ Solve it here ✍️
+
+  setupEl.textContent = joke.setup;
+  punchlineEl.textContent = joke.punchline;
 
    
 }
@@ -55,7 +69,7 @@ function displayJoke(joke) {
    Task 4: When #new-joke is clicked, load a new joke
    ------------------------------------------------------------ */
 
-// ✍️ Solve it here ✍️
+document.getElementById("new-joke").addEventListener("click", fetchJoke);
 
 
 
@@ -64,6 +78,6 @@ function displayJoke(joke) {
    Task 3: Load a joke when the page opens
    ------------------------------------------------------------ */
 
-// ✍️ Solve it here ✍️
+fetchJoke();
 
 
