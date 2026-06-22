@@ -12,7 +12,7 @@ const JOKE_URL = "https://official-joke-api.appspot.com/random_joke";
 // Grab the elements where the joke will go
 const setupEl = document.getElementById("setup");
 const punchlineEl = document.getElementById("punchline");
-
+// const btnJoke= document.querySelector("#new-joke")
 
 /* ------------------------------------------------------------
    Task 1 + Task 5: fetchJoke()
@@ -24,20 +24,30 @@ const punchlineEl = document.getElementById("punchline");
       and show "Couldn't load a joke" in setupEl
    ------------------------------------------------------------ */
 
-async function fetchJoke() {
+async function fetchJoke(joke) {
   // Show a loading message while we wait for the data
   setupEl.textContent = "Loading...";
   punchlineEl.textContent = "";
 
   // ✍️ Solve it here ✍️
-
-   
+  try{
+const responcejoke= await fetch(JOKE_URL);
+const jokedata = await responcejoke.json();
+ console.log(jokedata)
+  displayJoke(jokedata)
+  } catch (error){
+  console.log (error);
+  setupEl.textContent  ="couldn't load a joke"
 }
+
+  }
+
 
 
 /* ------------------------------------------------------------
    Task 2: displayJoke(joke)
 
+  
    Put the joke on the page, inside the displayJoke function:
    - set setupEl.textContent to joke.setup
    - set punchlineEl.textContent to joke.punchline
@@ -46,10 +56,11 @@ async function fetchJoke() {
 
 function displayJoke(joke) {
   // ✍️ Solve it here ✍️
-
-   
+ setupEl.textContent = joke.setup;
+  punchlineEl.textContent = joke.punchline
+  
 }
-
+fetchJoke();
 
 /* ------------------------------------------------------------
    Task 4: When #new-joke is clicked, load a new joke
@@ -57,7 +68,11 @@ function displayJoke(joke) {
 
 // ✍️ Solve it here ✍️
 
+const button= document.querySelector("#new-joke")
+button.addEventListener("click",(event)=>{
+fetchJoke();
 
+})
 
 
 /* ------------------------------------------------------------
@@ -66,4 +81,6 @@ function displayJoke(joke) {
 
 // ✍️ Solve it here ✍️
 
-
+window= document.addEventListener("load",()=>{
+   fetchJoke();
+})
